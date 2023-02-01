@@ -9,21 +9,45 @@ input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid #5f9341;
+    border: 1px solid #ff9400;
     margin-bottom: 4px;
+    border-radius: 3px;
+}
+
+input:focus {
+  outline: none;
 }
 
 button {
-    background: #5f9341;
-    color: white;
+    background: #ff9400;
+    color: black;
     padding: 10px 20px;
-    border: 1px solid #5f9341;
+    border: 1px solid #ff9400;
     font-weight: bold;
+    border-radius: 3px;
+}
+
+button:active {
+  background-color: white;
+  color: #ff9400;
+}
+
+button:hover {
+  opacity: 0.9;
 }
 
 #delete-btn {
     background: white;
-    color: #5f9341;
+    color: #ff9400;
+}
+
+#delete-btn:active {
+  color: black;
+  background-color: #ff9400;
+}
+
+#delete-btn:hover {
+  opacity: 0.85;
 }
 
 ul {
@@ -37,7 +61,9 @@ li {
 }
 
 a {
-    color: #5f9341;
+    color: #ff9400;
 }
 
-
+a:hover {
+  color: black;
+}
