@@ -12,12 +12,18 @@ if (leadsFromLocalStorage) {
 }
 
 tabBtn.addEventListener("click", function(){
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        myLeads.push(tabs[0].url)
-        localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-        render(myLeads)
-    })
+    const lead = myLeads.find(l => l === tabs[0].url.value);
+      if (!lead) addTab();
+      else throwError();
 })
+
+function addTab() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    myLeads.push(tabs[0].url)
+    localStorage.setItem("myLeads", JSON.stringify(myLeads) )
+    render(myLeads)
+  })
+}
 
 function render(leads) {
     let listItems = ""
@@ -43,6 +49,7 @@ deleteBtn.addEventListener("click", function() {
         myLeads = []
         render(myLeads)
         resetBtn()
+        window.location.reload()
       })
 })
 
@@ -53,15 +60,20 @@ function resetBtn() {
 }
 
 inputBtn.addEventListener("click", function() {
-    for (i = 0; i < myLeads.length; i++) {
-      if (inputEl.value != myLeads[i]) {
-          myLeads.push(inputEl.value)
-          inputEl.value = ""
-          localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-          render(myLeads)
-      } else if (inputEl.value === myLeads[i]) {
-          alert("This link already exists")
-      }
-    }
-   window.location.reload()
+  const lead = myLeads.find(l => l === inputEl.value);
+      if (!lead) addLead();
+      else throwError();
 })
+
+function addLead() {
+  myLeads.push(inputEl.value)
+  inputEl.value = ""
+  localStorage.setItem("myLeads", JSON.stringify(myLeads) )
+  render(myLeads)
+  window.location.reload()
+}
+
+function throwError() {
+  inputEl.value = ""
+  alert("This link already exists")
+}
